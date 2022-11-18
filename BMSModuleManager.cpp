@@ -312,45 +312,45 @@ void BMSModuleManager::printPackSummary()
             Logger::console("  Voltage: %fV   (%fV-%fV)     Temperatures: (%fC-%fC)", modules[y].getModuleVoltage(), 
                             modules[y].getLowCellV(), modules[y].getHighCellV(), modules[y].getLowTemp(), modules[y].getHighTemp());
 
-            Serial0.print("  Currently balancing cells: ");
+            SERIALCONSOLE.print("  Currently balancing cells: ");
             for (int i = 0; i < 6; i++)
             {                
                 if (modules[y].getBalancingState(i) == 1) 
                 {                    
-                    Serial0.print(i);
-                    Serial0.print(" ");
+                    SERIALCONSOLE.print(i);
+                    SERIALCONSOLE.print(" ");
                 }
             }
-            Serial0.println();
+            SERIALCONSOLE.println();
 
             if (faults > 0)
             {
                 Logger::console("  MODULE IS FAULTED:");
                 if (faults & 1)
                 {
-                    Serial0.print("    Overvoltage Cell Numbers (1-6): ");
+                    SERIALCONSOLE.print("    Overvoltage Cell Numbers (1-6): ");
                     for (int i = 0; i < 6; i++)
                     {
                         if (COV & (1 << i)) 
                         {
-                            Serial0.print(i+1);
-                            Serial0.print(" ");
+                            SERIALCONSOLE.print(i+1);
+                            SERIALCONSOLE.print(" ");
                         }
                     }
-                    Serial0.println();
+                    SERIALCONSOLE.println();
                 }
                 if (faults & 2)
                 {
-                    Serial0.print("    Undervoltage Cell Numbers (1-6): ");
+                    SERIALCONSOLE.print("    Undervoltage Cell Numbers (1-6): ");
                     for (int i = 0; i < 6; i++)
                     {
                         if (CUV & (1 << i)) 
                         {
-                            Serial0.print(i+1);
-                            Serial0.print(" ");
+                            SERIALCONSOLE.print(i+1);
+                            SERIALCONSOLE.print(" ");
                         }
                     }
-                    Serial0.println();
+                    SERIALCONSOLE.println();
                 }
                 if (faults & 4)
                 {
@@ -405,7 +405,7 @@ void BMSModuleManager::printPackSummary()
                     Logger::console("    Address not registered");
                 }
             }
-            if (faults > 0 || alerts > 0) Serial0.println();
+            if (faults > 0 || alerts > 0) SERIALCONSOLE.println();
         }
     }
 }
@@ -436,28 +436,28 @@ void BMSModuleManager::printPackDetails()
             COV = modules[y].getCOVCells();
             CUV = modules[y].getCUVCells();
 
-            Serial0.print("Module #");
-            Serial0.print(y);
-            if (y < 10) Serial0.print(" ");
-            Serial0.print("  ");
-            Serial0.print(modules[y].getModuleVoltage());
-            Serial0.print("V");
+            SERIALCONSOLE.print("Module #");
+            SERIALCONSOLE.print(y);
+            if (y < 10) SERIALCONSOLE.print(" ");
+            SERIALCONSOLE.print("  ");
+            SERIALCONSOLE.print(modules[y].getModuleVoltage());
+            SERIALCONSOLE.print("V");
             for (int i = 0; i < 6; i++)
             {
-                if (cellNum < 10) Serial0.print(" ");
-                Serial0.print("  Cell");
-                Serial0.print(cellNum++);
-                Serial0.print(": ");
-                Serial0.print(modules[y].getCellVoltage(i));
-                Serial0.print("V");
-                if (modules[y].getBalancingState(i) == 1) Serial0.print("*");
-                else Serial0.print(" ");
+                if (cellNum < 10) SERIALCONSOLE.print(" ");
+                SERIALCONSOLE.print("  Cell");
+                SERIALCONSOLE.print(cellNum++);
+                SERIALCONSOLE.print(": ");
+                SERIALCONSOLE.print(modules[y].getCellVoltage(i));
+                SERIALCONSOLE.print("V");
+                if (modules[y].getBalancingState(i) == 1) SERIALCONSOLE.print("*");
+                else SERIALCONSOLE.print(" ");
             }
-            Serial0.print("  Neg Term Temp: ");
-            Serial0.print(modules[y].getTemperature(0));
-            Serial0.print("C  Pos Term Temp: ");
-            Serial0.print(modules[y].getTemperature(1)); 
-            Serial0.println("C");
+            SERIALCONSOLE.print("  Neg Term Temp: ");
+            SERIALCONSOLE.print(modules[y].getTemperature(0));
+            SERIALCONSOLE.print("C  Pos Term Temp: ");
+            SERIALCONSOLE.print(modules[y].getTemperature(1)); 
+            SERIALCONSOLE.println("C");
         }
     }
 }

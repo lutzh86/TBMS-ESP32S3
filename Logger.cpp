@@ -148,24 +148,24 @@ boolean Logger::isDebug() {
  */
 void Logger::log(LogLevel level, char *format, va_list args) {
     lastLogTime = millis();
-    Serial0.print(lastLogTime);
-    Serial0.print(" - ");
+    SERIALCONSOLE.print(lastLogTime);
+    SERIALCONSOLE.print(" - ");
 
     switch (level) {
     case Debug:
-        Serial0.print("DEBUG");
+        SERIALCONSOLE.print("DEBUG");
         break;
     case Info:
-        Serial0.print("INFO");
+        SERIALCONSOLE.print("INFO");
         break;
     case Warn:
-        Serial0.print("WARNING");
+        SERIALCONSOLE.print("WARNING");
         break;
     case Error:
-        Serial0.print("ERROR");
+        SERIALCONSOLE.print("ERROR");
         break;
     }
-    Serial0.print(": ");
+    SERIALCONSOLE.print(": ");
 
     logMessage(format, args);
 }
@@ -195,68 +195,68 @@ void Logger::logMessage(char *format, va_list args) {
             if (*format == '\0')
                 break;
             if (*format == '%') {
-                Serial0.print(*format);
+                SERIALCONSOLE.print(*format);
                 continue;
             }
             if (*format == 's') {
                 register char *s = (char *) va_arg( args, int );
-                Serial0.print(s);
+                SERIALCONSOLE.print(s);
                 continue;
             }
             if (*format == 'd' || *format == 'i') {
-                Serial0.print(va_arg( args, int ), DEC);
+                SERIALCONSOLE.print(va_arg( args, int ), DEC);
                 continue;
             }
             if (*format == 'f') {
-                Serial0.print(va_arg( args, double ), 3);
+                SERIALCONSOLE.print(va_arg( args, double ), 3);
                 continue;
             }
             if (*format == 'x') {
-                Serial0.print(va_arg( args, int ), HEX);
+                SERIALCONSOLE.print(va_arg( args, int ), HEX);
                 continue;
             }
             if (*format == 'X') {
-                Serial0.print("0x");
-                Serial0.print(va_arg( args, int ), HEX);
+                SERIALCONSOLE.print("0x");
+                SERIALCONSOLE.print(va_arg( args, int ), HEX);
                 continue;
             }
             if (*format == 'b') {
-                Serial0.print(va_arg( args, int ), BIN);
+                SERIALCONSOLE.print(va_arg( args, int ), BIN);
                 continue;
             }
             if (*format == 'B') {
-                Serial0.print("0b");
-                Serial0.print(va_arg( args, int ), BIN);
+                SERIALCONSOLE.print("0b");
+                SERIALCONSOLE.print(va_arg( args, int ), BIN);
                 continue;
             }
             if (*format == 'l') {
-                Serial0.print(va_arg( args, long ), DEC);
+                SERIALCONSOLE.print(va_arg( args, long ), DEC);
                 continue;
             }
 
             if (*format == 'c') {
-                Serial0.print(va_arg( args, int ));
+                SERIALCONSOLE.print(va_arg( args, int ));
                 continue;
             }
             if (*format == 't') {
                 if (va_arg( args, int ) == 1) {
-                    Serial0.print("T");
+                    SERIALCONSOLE.print("T");
                 } else {
-                    Serial0.print("F");
+                    SERIALCONSOLE.print("F");
                 }
                 continue;
             }
             if (*format == 'T') {
                 if (va_arg( args, int ) == 1) {
-                    Serial0.print("TRUE");
+                    SERIALCONSOLE.print("TRUE");
                 } else {
-                    Serial0.print("FALSE");
+                    SERIALCONSOLE.print("FALSE");
                 }
                 continue;
             }
 
         }
-        Serial0.print(*format);
+        SERIALCONSOLE.print(*format);
     }
-    Serial0.println();
+    SERIALCONSOLE.println();
 }

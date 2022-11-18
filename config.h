@@ -3,11 +3,11 @@
 #include <Arduino.h>
 
 //Set to the proper port for your USB connection - SerialUSB on Due (Native) or Serial for Due (Programming) or Teensy
-
+#define SERIALCONSOLE   Serial
 
 //Define this to be the serial port the Tesla BMS modules are connected to.
 //On the Due you need to use a USART port (Serial1, Serial2, Serial3) and update the call to serialSpecialInit if not Serial1
-
+#define SERIAL  Serial2
 
 #define REG_DEV_STATUS      0
 #define REG_GPAI            1

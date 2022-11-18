@@ -53,7 +53,7 @@ void SerialConsole::init() {
 }
 
 void SerialConsole::loop() {  
-    if (Serial0.available()) {
+    if (SERIALCONSOLE.available()) {
         serialEvent();
     }
     if (printPrettyDisplay && (millis() > (prettyCounter + 3000)))
@@ -106,7 +106,7 @@ void SerialConsole::printMenu() {
  */
 void SerialConsole::serialEvent() {
     int incoming;
-    incoming = Serial0.read();
+    incoming = SERIALCONSOLE.read();
     if (incoming == -1) { //false alarm....
         return;
     }
@@ -330,42 +330,42 @@ void SerialConsole::handleShortCmd() {
 }
 
 /*
-    if (Serial0.available()) 
+    if (SERIALCONSOLE.available()) 
     {
-        char y = Serial0.read();
+        char y = SERIALCONSOLE.read();
         switch (y)
         {
         case '1': //ascii 1
             renumberBoardIDs();  // force renumber and read out
             break;
         case '2': //ascii 2
-            Serial0.println();
+            SERIALCONSOLE.println();
             findBoards();
             break;
         case '3': //activate cell balance for 5 seconds 
-            Serial0.println();
-            Serial0.println("Balancing");
+            SERIALCONSOLE.println();
+            SERIALCONSOLE.println("Balancing");
             cellBalance();
             break;
       case '4': //clear all faults on all boards, required after Reset or FPO (first power on)
-       Serial0.println();
-       Serial0.println("Clearing Faults");
+       SERIALCONSOLE.println();
+       SERIALCONSOLE.println("Clearing Faults");
        clearFaults();
       break;
 
       case '5': //read out the status of first board
-       Serial0.println();
-       Serial0.println("Reading status");
+       SERIALCONSOLE.println();
+       SERIALCONSOLE.println("Reading status");
        readStatus(1);
       break;
 
       case '6': //Read out the limit setpoints of first board
-       Serial0.println();
-       Serial0.println("Reading Setpoints");
+       SERIALCONSOLE.println();
+       SERIALCONSOLE.println("Reading Setpoints");
        readSetpoint(1);
-       Serial0.println(OVolt);
-       Serial0.println(UVolt);
-       Serial0.println(Tset);
+       SERIALCONSOLE.println(OVolt);
+       SERIALCONSOLE.println(UVolt);
+       SERIALCONSOLE.println(Tset);
       break; 
 
       case '0': //Send all boards into Sleep state

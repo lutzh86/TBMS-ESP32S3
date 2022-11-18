@@ -40,8 +40,8 @@ void loadSettings()
         settings.UnderVSetpoint = 2.3f;
         settings.OverTSetpoint = 65.0f;
         settings.UnderTSetpoint = -10.0f;
-        settings.balanceVoltage = 3.95f;
-        settings.balanceHyst = 0.02f;
+        settings.balanceVoltage = 3.9f;
+        settings.balanceHyst = 0.04f;
         settings.logLevel = 2;
         //EEPROM.write(EEPROM_PAGE, settings);
         EEPROM.put(EEPROM_PAGE, settings); 
@@ -71,14 +71,15 @@ void initializeCAN()
 
 void setup() 
 {
+     delay(4000);  //just for easy debugging. It takes a few seconds for USB to come up properly on most OS's
+   
     
+    SERIALCONSOLE.begin(115200);
+    SERIALCONSOLE.println("Starting up!");
 
-    Serial0.begin(115200);
-    Serial0.println("Starting up!");
+    SERIAL.begin(BMS_BAUD, SERIAL_8N1, RX2, TX2);
 
-    Serial2.begin(BMS_BAUD, SERIAL_8N1, RX2, TX2);
-
-    Serial0.println("Started serial interface to BMS.");
+    SERIALCONSOLE.println("Started serial interface to BMS.");
 
     EEPROM.begin(EEPROM_SIZE);
 
@@ -90,7 +91,7 @@ void setup()
 
     bms.renumberBoardIDs();
 
-    // Logger::setLoglevel(Logger::Debug);
+    Logger::setLoglevel(Logger::Debug);
 
     lastUpdate = 0;
 
@@ -111,8 +112,8 @@ void loop()
     }
 
 
-    /* if (Can0.available()) {
+    if (Can0.available()) {
         Can0.read(incoming);
         bms.processCANMsg(incoming);
-    } */
+    } 
 }
